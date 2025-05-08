@@ -1,1 +1,1 @@
-# mcp-server
+# mcp-client-server
