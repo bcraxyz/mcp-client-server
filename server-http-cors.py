@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastmcp import FastMCP
 
-app = FastAPI("Math MCP Server with CORS")
+app = FastAPI()
 server = FastMCP("Math MCP Server")
 
 origins = [
