@@ -1,10 +1,8 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastmcp import FastMCP
 
 app = FastAPI()
-server = FastMCP("Math MCP Server")
 
 origins = [
     "*.workers.dev",
@@ -23,15 +21,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@server.tool()
+# Create an MCP server from your FastAPI app
+mcp = FastMCP.from_fastapi(app=app)
+
+@mcp.tool()
 def add(a: int, b: int) -> int:
     """Adds two numbers"""
     return a + b
 
-@server.tool()
+@mcp.tool()
 def multiply(a: int, b: int) -> int:
     """Multiplies two numbers"""
     return a * b
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    mcp.run(transport="streamable-http", host="0.0.0.0", port=8000)
